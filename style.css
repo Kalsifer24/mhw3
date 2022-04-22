@@ -73,23 +73,31 @@ footer{
 }
 
 footer div{
-    padding:20px;
+    padding:0px;
 }
 
-footer h1{
+#title{
     margin-bottom:18px;
+    font-weight: bolder;
+    font-size: larger;
+    font-size: 50px;
+    max-width: 700px;
+    
 }
 
-footer p{
+#descrizione{
     margin-bottom:18px;
-    font-size:27px;
-    font-weight: bold;
+    font-size:20px;
+    font-weight:bold;
+    max-width:60%;
+
 }
 
 footer button{
     height:50px;
     background-color:#cecece;
     width:100%;
+    margin-top:15px;
 }
 
 footer button:hover{
@@ -97,8 +105,14 @@ footer button:hover{
 }
 
 footer img{
-    width:100%;
+    max-width:50%;
     height: 350px;
+    margin-bottom:15px;
+}
+
+#prova{
+    display:flex;
+    justify-content: space-between;
 }
 
 .hidden{
