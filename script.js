@@ -41,7 +41,6 @@ function selected(event)
 
 }
 
- 
 function Risposte(domanda,id){
 
 const images = document.querySelectorAll('.choice-grid div');
@@ -50,31 +49,28 @@ const images = document.querySelectorAll('.choice-grid div');
         if(box.classList == "selected" && domanda=="one")
         {
             answers.Ans1=box.dataset.choiceId;
-           
-            
         }
 
         if(box.classList == "selected" && domanda=="two")
         {
-            answers.Ans2=box.dataset.choiceId;
-            
+            answers.Ans2=box.dataset.choiceId;            
         }
 
         if(box.classList == "selected" && domanda=="three")
         {
-            answers.Ans3=box.dataset.choiceId;
-            
+            answers.Ans3=box.dataset.choiceId;            
         }
     }
         
-
   if(answers.Ans1 !== "" && answers.Ans2 !== "" && answers.Ans3 !== ""){      
     
     for (let image of images)
     {
     image.removeEventListener('click', selected);
-    }
+    }    
 
+    let kitsu = 'https://kitsu.io/api/edge//anime?filter[categories]='+ category;
+    
     fetch(kitsu,  
         {
             headers: 
@@ -85,42 +81,6 @@ const images = document.querySelectorAll('.choice-grid div');
             }
     
         }).then(onResponse).then(onJsonAnime);
-
-   /* if (answers.Ans1 === answers.Ans2 || answers.Ans1 === answers.Ans3 || answers.Ans1 !== answers.Ans2 !== answers.Ans3 ){
-        titolo.textContent = title;
-        descrizione.textContent = synops;
-        res_img.src = poster;
-
-        fetch(kitsu,  
-            {
-                headers: 
-                {
-                    'Accept': 'application/vnd.api+json',
-                    'Content-Type': 'application/vnd.api+json',
-                    'Authorization':'Bearer' + token 
-                }
-        
-            }).then(onResponse).then(onJsonAnime);
-        
-    }
-
-    else if(answers.Ans2 === answers.Ans3){
-        titolo.textContent = title;
-        descrizione.textContent = synops;
-        res_img.src = poster;
-
-        fetch(kitsu,  
-            {
-                headers: 
-                {
-                    'Accept': 'application/vnd.api+json',
-                    'Content-Type': 'application/vnd.api+json',
-                    'Authorization':'Bearer' + token 
-                }
-        
-            }).then(onResponse).then(onJsonAnime);
-        
-    }*/
 
     result.classList.remove("hidden");
 
@@ -149,31 +109,39 @@ const images = document.querySelectorAll('.choice-grid div');
     button.classList.remove('hidden');
     }
 
-
     answers.Ans1 = "";
     answers.Ans2 = "";
     answers.Ans3 = "";
 
     result.classList.add("hidden");
 
+    titolo.textContent = "";
+    descrizione.textContent = "";
+    res_img.src = "";
+
 }
 
 function Start(){
 
     quiz.classList.remove('hidden');
-
+    category_select.classList.add('hidden');
     for (let button of buttons)
     {
     button.classList.add('hidden');
     }
 
-    fetch(neko).then(onResponse).then(onJsonNeko);
+    category = this.id;
 
-   
+    creation();
+
+    
 }
 
 function creation(){
     let j = 0;
+    let x = 0;
+    let y = Math.floor(Math.random() * 180);
+
     let list = Array.prototype.slice.call(grids); 
 
     for(let grid of grids){
@@ -182,13 +150,7 @@ function creation(){
 
             const block = document.createElement('div');
             const image = document.createElement('img');
-            const chkbox = document.createElement('img');
-
-            image.src = random_img[j].url;
-            j++
-            if(j>=20)
-            j=0;
-            
+            const chkbox = document.createElement('img');        
 
             chkbox.src = "images/unchecked.png";
             chkbox.classList.add("checkbox");
@@ -196,12 +158,18 @@ function creation(){
             
             if(list.indexOf(grid) == "0"){
             block.setAttribute('data-question-id',"one");
+            image.src = digi_img[y].img;
+            y++
             }
             else if(list.indexOf(grid) == "1"){
             block.setAttribute('data-question-id',"two");
+            image.src = poke_img[x];
+            x++
             }
             else if(list.indexOf(grid) == "2"){
             block.setAttribute('data-question-id',"three");
+            image.src = neko_img[j].url;
+            j++
             }
              
             block.setAttribute('data-choice-id', i);
@@ -226,61 +194,17 @@ function onResponse(response){
 }
 
 function onJsonNeko(json){
-    random_img = json.results;
-    creation();
+    neko_img = json.results;
     
-            
+}
 
-   /* let j = 0;
-    let list = Array.prototype.slice.call(grids); 
-    
+function onJsonPoke(json){
+    poke_img[p] = json.sprites.front_default;
+    p++;
+}
 
-    for(let grid of grids){
-
-        for( let i = 0; i<9 ; i++){
-            
-            let images = json.results[j];
-            j++
-            if(j>=20){
-                j=0;
-            }
-
-            
-
-            const block = document.createElement('div');
-            const image = document.createElement('img');
-            const chkbox = document.createElement('img');
-
-            image.src = images.url;
-            chkbox.src = "images/unchecked.png";
-            chkbox.classList.add("checkbox");
-           
-            
-            if(list.indexOf(grid) == "0"){
-            block.setAttribute('data-question-id',"one");
-            }
-            else if(list.indexOf(grid) == "1"){
-            block.setAttribute('data-question-id',"two");
-            }
-            else if(list.indexOf(grid) == "2"){
-            block.setAttribute('data-question-id',"three");
-            }
-             
-            block.setAttribute('data-choice-id', i);
-
-            grid.appendChild(block);
-            block.appendChild(image);
-            block.appendChild(chkbox);
-        }    
-    }  
-
-    const images = document.querySelectorAll('.choice-grid div');
-    
-    for (let image of images)
-    {
-    image.addEventListener('click', selected);
-    }*/
-
+function onJsonDig(json){
+    digi_img = json;
 }
 
 function onJsonAnime(json){
@@ -291,7 +215,7 @@ function onJsonAnime(json){
     synops = json.data[i].attributes.synopsis;
 
     if (answers.Ans1 === answers.Ans2 || answers.Ans1 === answers.Ans3 || answers.Ans1 !== answers.Ans2 !== answers.Ans3 ){
-        titolo.textContent ="Titolo: " + title;
+        titolo.textContent = title;
         descrizione.textContent = synops;
         res_img.src = poster;
         
@@ -313,7 +237,6 @@ function onTokenResponse(response){
 
 function getToken(json){
     token = json;
-    
 }
 
 
@@ -323,6 +246,7 @@ function getToken(json){
 
 let quiz = document.querySelector(".quiz")
 const grids = document.querySelectorAll(".choice-grid")
+const category_select = document.querySelector("#category h1")
 const buttons = document.querySelectorAll("#category button");
 const reset = document.querySelector("footer button");
 const res_img = document.querySelector("footer img");
@@ -341,19 +265,40 @@ let title;
 let poster;
 let synops;
 let choice_id;
-let random;
-let random_img;
+
+
+
 //API
 
 let token;
+let poke_id;
+let neko_img;
+let poke_img = [];
+let digi_img;
+let category;
+let p = 0;
+
 
 const neko = 'https://nekos.best/api/v2/neko?amount=20';
-const kitsu = 'https://kitsu.io/api/edge//anime?filter[categories]=shounen';
 const kitsu_auth_token = 'https://kitsu.io/api/oauth/token';
-const poke = "https://pokeapi.co/api/v2/pokemon/"+random+"/";
+const digimon = "https://digimon-api.vercel.app/api/digimon";
+
 
 const id = 'antodibella111@gmail.com';
 const password = 'webprog2022';
+
+fetch(neko).then(onResponse).then(onJsonNeko);
+
+for(let t = 0; t<9; t++){
+    poke_id = Math.floor(Math.random() * 700) + 1;
+    let poke = "https://pokeapi.co/api/v2/pokemon/"+ poke_id +"/";
+    console.log(poke_id);
+    fetch(poke).then(onResponse).then(onJsonPoke);
+}
+
+fetch(digimon).then(onResponse).then(onJsonDig);
+
+
 
 fetch(kitsu_auth_token,
     {

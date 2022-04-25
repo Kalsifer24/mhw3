@@ -5,14 +5,14 @@
     <meta charset="utf-8">
     <title>Titolo del test</title>
     <link href="https://fonts.googleapis.com/css?family=Pangolin:400,700|Proxima+Nova" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="provided-style.css"/>
+    
     <link rel="stylesheet" href="style.css"/>
     <meta name="viewport" content="width=device-width,inizial-scale=1">
-    <script src="constants.js" defer="true"></script>
     <script src="script.js" defer="true"></script>
   </head>
 
   <body> 
+    <div id="overlay"></div>
     <article>
       <header>
           <h1>Web Programming</h1>
@@ -25,35 +25,35 @@
       </header>
       
       <div id="category">
-          <button type="button">SHOW</button>
-          <button type="button">SHOW</button>
-          <button type="button">SHOW</button>
-          <button type="button">SHOW</button>
-          <button type="button">SHOW</button>
+          <h1>SCEGLI UNA CATEGORIA</h1>
+          <button id="shounen" type="button">SHOUNEN</button>
+          <button id="sports" type="button">SPORT</button>
+          <button id="seinen" type="button">SEINEN</button>
+          
       </div>
 
     <section class="quiz hidden">
 
-      <h1>Quiz sulla personalità anime edition</h1>
+      <h1>Quiz anime preferito </h1>
 
-      <section class="question-name">
-        <h1>Personaggio preferito:</h1>
+      <section id="digimon" class="question-name">
+        <h1>Scegli un Digimon:</h1>
       </section>
 
       <section  class="choice-grid">
       </section>
 
 
-      <section  class="question-name">
-        <h1>Colore preferito:</h1>
+      <section id="pokemon" class="question-name">
+        <h1>Scegli un Pokèmon:</h1>
       </section>
 
       <section class="choice-grid">
       </section>
 
 
-      <section  class="question-name">
-        <h1>Ambientazione preferita:</h1>
+      <section id="neko"  class="question-name">
+        <h1>Scegli una Catgirl:</h1>
       </section>
 
       <section class="choice-grid">
@@ -64,7 +64,7 @@
     <footer>
       <div class="hidden">
         <div id="title"> </div>
-        <div id="prova">
+        <div id="final_result">
         <img src = ""/>
         <span id='descrizione'>  </span>
         </div>
