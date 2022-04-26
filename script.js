@@ -292,7 +292,6 @@ fetch(neko).then(onResponse).then(onJsonNeko);
 for(let t = 0; t<9; t++){
     poke_id = Math.floor(Math.random() * 700) + 1;
     let poke = "https://pokeapi.co/api/v2/pokemon/"+ poke_id +"/";
-    console.log(poke_id);
     fetch(poke).then(onResponse).then(onJsonPoke);
 }
 
